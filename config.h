@@ -22,7 +22,7 @@ static char normfgcolor[]           = "#bbbbbb"; //#bbbbbb
 static char selfgcolor[]            = "#eeeeee"; //#eeeeee
 static char selbordercolor[]        = "#770000"; //#770000
 static char selbgcolor[]            = "#000000"; //#000000
-static const unsigned int baralpha  = 0xbe ; //0xd0
+static const unsigned int baralpha  = 0xab ; //0xd0 [0xbe]
 static const unsigned int borderalpha = OPAQUE;
 static char *colors[][3] = {
        /*               fg           bg           border   */
@@ -143,7 +143,7 @@ static Key keys[] = {
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	/* { MODKEY|ShiftMask,		XK_Escape,	spawn,	SHCMD("") }, */
-	{ MODKEY,			49,	spawn,	SHCMD("pkill -RTMIN+11 dwmblocks") }, //grave
+    { MODKEY,			49,	spawn,	{.v = (const char*[]){ "dmenuunicode", NULL } } }, //grave
 	/* { MODKEY|ShiftMask,		XK_grave,	togglescratch,	SHCMD("") }, */
 	TAGKEYS(			10,		0) //1
 	TAGKEYS(			11,		1) //2
@@ -171,12 +171,12 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		25,		spawn,		SHCMD("sxiv -b -t ~/pics/wallpapers") },
 	{ MODKEY,			26,		spawn,		SHCMD("setxkbmap -layout us && pkill -RTMIN+22 dwmblocks") }, //e
 	/*{ MODKEY|ShiftMask,		26,		spawn,		SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },*/
-	{ MODKEY,			27,		spawn,		SHCMD("setxkbmap -layout ru -variant prxn && pkill -RTMIN+22 dwmblocks") }, //r
+	{ MODKEY,			27,		spawn,		SHCMD("setxkbmap -layout ru && pkill -RTMIN+22 dwmblocks") }, //r
 	{ MODKEY|ShiftMask,		27,		spawn,		SHCMD("setxkbmap -layout ru -variant csl && pkill -RTMIN+22 dwmblocks") },
 	{ MODKEY,			28,		setlayout,	{.v = &layouts[0]} }, /* tile */ //t
 	/*{ MODKEY|ShiftMask,		28,		setlayout,	{.v = &layouts[1]} }, bstack */
 	{ MODKEY,			29,		setlayout,	{.v = &layouts[1]} }, /* bstack ### 2 = spiral (fibonacci) */ //y
-	/*{ MODKEY|ShiftMask,		29,		setlayout,	{.v = &layouts[3]} }, dwindle */
+	{ MODKEY|ShiftMask,		29,		togglesticky,	{0} },
 	{ MODKEY,			30,		setlayout,	{.v = &layouts[4]} }, /* deck */ //u
 	{ MODKEY|ShiftMask,		30,		setlayout,	{.v = &layouts[5]} }, /* monocle */
 	{ MODKEY,			31,		setlayout,	{.v = &layouts[6]} }, /* centeredmaster */ //i
@@ -193,10 +193,10 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,		51,		spawn,		SHCMD("") }, */
 
     { MODKEY,			38,		spawn,	SHCMD(TERMINAL " -e lfub") }, //a
-	{ MODKEY|ShiftMask,		38,		defaultgaps,	{0} },
+	{ MODKEY|ShiftMask,		38,		spawn,		SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
 	{ MODKEY,			39,		spawn,  SHCMD("setxkbmap -layout rs && pkill -RTMIN+22 dwmblocks") }, //s
 	{ MODKEY|ShiftMask,		39,		spawn,		SHCMD("setxkbmap -layout rs -variant latin && pkill -RTMIN+22 dwmblocks") },
-	{ MODKEY,			40,		spawn,          SHCMD("dmenu_run -i -fn 'LiberationSans:size=9' -nb '#000000'") }, //d
+	{ MODKEY,			40,		spawn,          SHCMD("dmenu_run") }, //d
 	/*{ MODKEY|ShiftMask,		40,		spawn,		SHCMD("passmenu") },*/
 	{ MODKEY,			41,		togglefullscr,	{0} }, //f
 	{ MODKEY|ShiftMask,		41,		setlayout,	{.v = &layouts[8]} },
@@ -217,8 +217,8 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,		52,		spawn,		SHCMD("") }, */
 	{ MODKEY,			53,		incrgaps,	{.i = -3 } }, //x
 	/* { MODKEY|ShiftMask,		53,		spawn,		SHCMD("") }, */
-	/* { MODKEY,			54,		spawn,		SHCMD("") }, */ //c
-	/* { MODKEY|ShiftMask,		54,		spawn,		SHCMD("") }, */
+	{ MODKEY,			54,		togglegaps,		{0} }, //c
+	{ MODKEY|ShiftMask,		54,		defaultgaps,		{0} },
 	/* V is automatically bound above in STACKKEYS */
 	{ MODKEY,			56,		togglebar,	{0} }, //b
 	{ MODKEY|ShiftMask,		56,		spawn,		SHCMD(TERMINAL " -e tremc; pkill -RTMIN+7 dwmblocks") },
@@ -240,28 +240,28 @@ static Key keys[] = {
 	/*{ MODKEY|ShiftMask,		XK_Page_Up,	shifttag,	{ .i = -1 } }, */
 	/*{ MODKEY,			XK_Page_Down,	shiftview,	{ .i = +1 } }, */
 	/*{ MODKEY|ShiftMask,		XK_Page_Down,	shifttag,	{ .i = +1 } },*/
-	/*{ MODKEY,			XK_Insert,	spawn,		SHCMD("xdotool type $(grep -v '^#' ~/.local/share/larbs/snippets | dmenu -i -l 50 | cut -d' ' -f1)") },*/
+	{ MODKEY,			118,	spawn,		SHCMD("xdotool type $(grep -v '^#' ~/.local/share/larbs/snippets | dmenu -i -l 50 | cut -d' ' -f1)") }, //XK_Insert
 
 	/*{ MODKEY,			67,		spawn,		SHCMD("groff -mom /usr/local/share/dwm/larbs.mom -Tpdf | zathura -") },*/ //F1
 	/*{ MODKEY,			XK_F2,		spawn,		SHCMD("tutorialvids") },*/ //F2
-	/*{ MODKEY,			XK_F3,		spawn,		SHCMD("displayselect") },*/ //F3
-	/*{ MODKEY,			XK_F4,		spawn,		SHCMD(TERMINAL " -e pulsemixer; kill -44 $(pidof dwmblocks)") },*/ //F4
+	{ MODKEY,			69,		spawn,		SHCMD("displayselect") }, //F3
+	{ MODKEY,			70,		spawn,		SHCMD(TERMINAL " -e pulsemixer; kill -44 $(pidof dwmblocks)") }, //F4
 	/* { MODKEY,		XK_F5,		xrdb,		{.v = NULL } }, */ //F5
-	/*{ MODKEY,			XK_F6,		spawn,		SHCMD("torwrap") },*/ //F6
-	/*{ MODKEY,			XK_F7,		spawn,		SHCMD("td-toggle") },*/ //F7
+	{ MODKEY,			72,		spawn,		SHCMD("torwrap") }, //F6
+	{ MODKEY,			73,		spawn,		SHCMD("td-toggle") }, //F7
 	{ MODKEY,			74,		spawn,		SHCMD("mw -Y") }, //F8
-	/*{ MODKEY,			XK_F9,		spawn,		SHCMD("dmenumount") },*/ //F9
-	/*{ MODKEY,			XK_F10,		spawn,		SHCMD("dmenuumount") },*/ //F10
+	{ MODKEY,			75,		spawn,		SHCMD("dmenumount") }, //F9
+	{ MODKEY,			76,		spawn,		SHCMD("dmenuumount") }, //F10
 	{ MODKEY,			95,		spawn,		SHCMD("mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") }, //F11
 	/*{ MODKEY,			XK_F12,		spawn,		SHCMD("remaps & notify-send \\\"⌨️ Keyboard remapping...\\\" \\\"Re-running keyboard defaults for any newly plugged-in keyboards.\\\"") },*/ //F12
 	{ MODKEY,			65,	zoom,		{0} }, //space
 	{ MODKEY|ShiftMask,		65,	togglefloating,	{0} },
 
-	{ 0,				107,	spawn,		SHCMD("notify-send -i ~/pics/capture.png 'Select area you want to capture.' && scrot -s '%d-%m-%Y-Screen-%H:%M.png' -e 'mv $f ~/pics' && notify-send -i ~/pics/screenshot-32.ico 'Screenshot saved in ~/pics!'") }, //print
-	{ ShiftMask,			107,	spawn,		SHCMD("scrot '%d-%m-%Y-Screen-%H:%M.png' -e 'mv $f ~/pics' && notify-send -i ~/pics/screenshot-32.ico 'Screenshot saved in ~/pics!'") },
-	/*{ MODKEY,			XK_Print,	spawn,		SHCMD("dmenurecord") },*/
-	/*{ MODKEY|ShiftMask,		XK_Print,	spawn,		SHCMD("dmenurecord kill") },*/
-	/*{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },*/
+    { 0,				107,	spawn,		SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") }, //print
+    { ShiftMask,			107,	spawn,		{.v = (const char*[]){ "maimpick", NULL } } },
+    { MODKEY,			107,	spawn,		{.v = (const char*[]){ "dmenurecord", NULL } } },
+    { MODKEY|ShiftMask,		107,	spawn,		{.v = (const char*[]){ "dmenurecord", "kill", NULL } } },
+    { MODKEY,			119,	spawn,		{.v = (const char*[]){ "dmenurecord", "kill", NULL } } }, //delete
 	/*{ MODKEY,			XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },*/
 
 	{ 0, 121,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
