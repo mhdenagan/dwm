@@ -257,8 +257,8 @@ static Key keys[] = {
 	{ MODKEY,			65,	zoom,		{0} }, //space
 	{ MODKEY|ShiftMask,		65,	togglefloating,	{0} },
 
-    { 0,				107,	spawn,		SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") }, //print
-    { ShiftMask,			107,	spawn,		{.v = (const char*[]){ "maimpick", NULL } } },
+    { 0,                107,    spawn,          {.v = (const char*[]){ "maimpick", NULL } } },//print
+    { ShiftMask,				107,	spawn,		SHCMD("maim ~/pics/pic-full-$(date '+%y%m%d-%H%M-%S').png && notify-send -i ~/pics/screenshot.png 'Screenshot taken.' 'Saved in ~/pics.'") },
     { MODKEY,			107,	spawn,		{.v = (const char*[]){ "dmenurecord", NULL } } },
     { MODKEY|ShiftMask,		107,	spawn,		{.v = (const char*[]){ "dmenurecord", "kill", NULL } } },
     { MODKEY,			119,	spawn,		{.v = (const char*[]){ "dmenurecord", "kill", NULL } } }, //delete
