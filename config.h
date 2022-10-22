@@ -222,7 +222,7 @@ static Key keys[] = {
 	/* V is automatically bound above in STACKKEYS */
 	{ MODKEY,			56,		togglebar,	{0} }, //b
 	{ MODKEY|ShiftMask,		56,		spawn,		SHCMD(TERMINAL " -e tremc; pkill -RTMIN+7 dwmblocks") },
-	{ MODKEY,			57,		spawn,		SHCMD(TERMINAL " -e ncmpcpp") }, //n
+	{ MODKEY,			57,		spawn,		SHCMD(TERMINAL " -e ncmpcpp; pkill -RTMIN+11 dwmblocks") }, //n
 	{ MODKEY|ShiftMask,		57,		spawn,		SHCMD(TERMINAL " -e newsboat; pkill -RTMIN+6 dwmblocks") },
 	{ MODKEY,			58,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") }, //m
 	/*{ MODKEY|ShiftMask,		58,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },*/
